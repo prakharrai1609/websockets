@@ -9,17 +9,32 @@
   <body>
     Web socket tutorial.
 
+    <div style="margin-top: 1rem">
+      <input type="text" id="input" placeholder="Input" />
+      <button id="submit">Submit</button>
+    </div>
+    <div id="conversation"></div>
+
     <script>
       const ws = new WebSocket("ws://localhost:8080");
+      const conversation = document.getElementById("conversation");
+
+      submit.addEventListener("click", () => {
+        const input = document.getElementById("input").value;
+        const submit = document.getElementById("submit");
+        console.log("INPUT: ", input);
+        ws.send(input);
+        conversation.innerHTML += `<p>Client: ${input}</p>`;
+        document.getElementById("input").value = "";
+      });
+
       ws.addEventListener("open", () => {
         console.log("We are connected!");
       });
-      ws.onopen = (event) => {
-        ws.send("Client data.");
-      };
 
       ws.addEventListener("message", (e) => {
         console.log("message from server: ", e);
+        conversation.innerHTML += `<p>Server: ${e.data}</p>`;
       });
     </script>
   </body>

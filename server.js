@@ -8,7 +8,7 @@ const main = () => {
 
     event.on('message', (data) => {
       console.log('Message from client: ', data.toString());
-      event.send('Response ', data);
+      event.send(`Recieved ${data.toString()}`);
     })
 
     event.on('close', () => {
